@@ -1,0 +1,23 @@
+From 721a7880f7882a226e6e94e7549c74f5727aa201 Mon Sep 17 00:00:00 2001
+From: Kyle Harrison <khwebmail@gmail.com>
+Date: Fri, 17 Oct 2014 19:28:00 +0100
+Subject: [PATCH] Fix for python when using virtualenv
+
+Change-Id: Ic22592fefdb6ef7441faff4df266254a917bb5b2
+---
+ tools/getb64key.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/getb64key.py b/tools/getb64key.py
+index 0bb63e1..a0cd1c3 100755
+--- a/tools/getb64key.py
++++ b/tools/getb64key.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ 
+ import base64
+ import sys
+-- 
+2.1.2
+

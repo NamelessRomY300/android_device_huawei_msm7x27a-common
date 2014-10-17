@@ -1,21 +1,27 @@
-From 1ba693ba07e225f33c28d1502fa69eaba4237c60 Mon Sep 17 00:00:00 2001
-From: Kyle Harrison <khwebmail@gmail.com>
-Date: Thu, 16 Jan 2014 12:21:59 +0000
+From 8e37ea93c5a2b75f18a37068df4dce868ad1e961 Mon Sep 17 00:00:00 2001
+From: dhacker29 <davidhackerdvm@gmail.com>
+Date: Sat, 17 Aug 2013 16:35:18 -0500
 Subject: [PATCH] Add setting for Vold Switchable Pair (2/2)
 
----
- res/values/slim_strings.xml                     |  7 ++++
- res/xml/device_info_memory.xml                  |  5 +++
- src/com/android/settings/deviceinfo/Memory.java | 54 ++++++++++++++++++++++++-
- 3 files changed, 65 insertions(+), 1 deletion(-)
+This will be hidden unless the device has non-emulated internal storage
+and an external SD, in which case persist.sys.vold.switchablepair will be
+set automaticaly.  This does away with the need for ro.vold.switchablepair
+to be set in the build.prop.
 
-diff --git a/res/values/slim_strings.xml b/res/values/slim_strings.xml
-index 78af6f3..81ab8d7 100644
---- a/res/values/slim_strings.xml
-+++ b/res/values/slim_strings.xml
-@@ -916,6 +916,13 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
-     <!-- Minimum Vibration Duration -->
-     <string name="minimum_vibration_duration">Minimum vibration duration</string>
+Change-Id: Id83fc90d771ca3a7179f2c50d0ae828eb3dbaa9f
+---
+ res/values/cm_strings.xml                       |  7 ++++
+ res/xml/device_info_memory.xml                  |  5 +++
+ src/com/android/settings/deviceinfo/Memory.java | 53 ++++++++++++++++++++++++-
+ 3 files changed, 64 insertions(+), 1 deletion(-)
+
+diff --git a/res/values/cm_strings.xml b/res/values/cm_strings.xml
+index 4fbab5c..7839717 100644
+--- a/res/values/cm_strings.xml
++++ b/res/values/cm_strings.xml
+@@ -1197,6 +1197,13 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
+     <string name="edge_gesture_service_title">Block gesture touch events</string>
+     <string name="edge_gesture_service_summary">Don\'t send touch events for navigation and status bar gestures to apps</string>
  
 +    <!-- Vold Switchable Pair -->
 +    <string name="storage_switch_title">Use external SD as primary</string>
@@ -24,9 +30,9 @@ index 78af6f3..81ab8d7 100644
 +    <string name="reboot_prompt_title">Reboot required</string>
 +    <string name="reboot_prompt_message">In order to apply the changed configuration, a reboot is required.\n\nDo you want to reboot now?</string>
 +
-     <!-- ListView animation -->
-     <string name="interface_settings_animation_title">Animation options</string>
-     <string name="listview_animation_title">ListView animation</string>
+     <!-- Data Usage -->
+     <!-- Subtitle of dialog for editing data usage cycle reset date. [CHAR LIMIT=32] -->
+     <string name="data_usage_cycle_editor_subtitle_cm">Date of each cycle:</string>
 diff --git a/res/xml/device_info_memory.xml b/res/xml/device_info_memory.xml
 index e905f39..2010b2c 100644
 --- a/res/xml/device_info_memory.xml
@@ -44,7 +50,7 @@ index e905f39..2010b2c 100644
  <!-- Preference categories are dynamically created based on the list of available storage volumes -->
  
 diff --git a/src/com/android/settings/deviceinfo/Memory.java b/src/com/android/settings/deviceinfo/Memory.java
-index 999611d..92d9863 100644
+index 52fef32..e465a22 100644
 --- a/src/com/android/settings/deviceinfo/Memory.java
 +++ b/src/com/android/settings/deviceinfo/Memory.java
 @@ -32,16 +32,20 @@ import android.hardware.usb.UsbManager;
@@ -107,7 +113,7 @@ index 999611d..92d9863 100644
          addCategory(StorageVolumePreferenceCategory.buildForInternal(context));
  
          final StorageVolume[] storageVolumes = mStorageManager.getVolumeList();
-@@ -214,7 +243,13 @@ public class Memory extends SettingsPreferenceFragment {
+@@ -213,7 +242,13 @@ public class Memory extends SettingsPreferenceFragment {
  
      @Override
      public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -122,11 +128,10 @@ index 999611d..92d9863 100644
              ConfirmClearCacheFragment.show(this);
              return true;
          }
-@@ -424,4 +459,21 @@ public class Memory extends SettingsPreferenceFragment {
+@@ -423,4 +458,20 @@ public class Memory extends SettingsPreferenceFragment {
              return builder.create();
          }
      }
-+
 +    private void showRebootPrompt() {
 +        AlertDialog dialog = new AlertDialog.Builder(getActivity())
 +                .setTitle(R.string.reboot_prompt_title)
@@ -136,7 +141,7 @@ index 999611d..92d9863 100644
 +                    public void onClick(DialogInterface dialog, int which) {
 +                        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 +                        pm.reboot(null);
-+                    }
++                   }
 +                })
 +                .setNegativeButton(R.string.no, null)
 +                .create();
@@ -145,5 +150,5 @@ index 999611d..92d9863 100644
 +    }
  }
 -- 
-1.8.5.2
+2.1.2
 
