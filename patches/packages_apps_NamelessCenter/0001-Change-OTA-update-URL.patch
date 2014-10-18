@@ -1,0 +1,25 @@
+From accc73500ad47be6497a4e2e8952fd0b2d2c87e3 Mon Sep 17 00:00:00 2001
+From: Kyle Harrison <khwebmail@gmail.com>
+Date: Sat, 18 Oct 2014 14:07:33 +0100
+Subject: [PATCH] Change OTA update URL
+
+---
+ app/src/main/java/org/namelessrom/center/Constants.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/app/src/main/java/org/namelessrom/center/Constants.java b/app/src/main/java/org/namelessrom/center/Constants.java
+index bfb073b..a4a8000 100644
+--- a/app/src/main/java/org/namelessrom/center/Constants.java
++++ b/app/src/main/java/org/namelessrom/center/Constants.java
+@@ -42,7 +42,7 @@ public class Constants {
+     //==============================================================================================
+     public static final String URL             = LOCALHOST_TESTING
+             ? "http://192.168.43.234:3000"
+-            : "https://api.nameless-rom.org";
++            : "https://copy.com/LtEmofUTkmUzyQg0/Nameless";
+     public static final String API_URL         = URL + "/version";
+     public static final String ROM_URL         = URL + "/update";
+     //----------------------------------------------------------------------------------------------
+-- 
+2.1.2
+
